@@ -1,0 +1,26 @@
+#initialize
+  
+ variable cutoff equal 14.0 # Angstroms
+  boundary p p p
+        units           real
+        atom_style      full
+        bond_style      harmonic
+        angle_style     harmonic
+        dihedral_style  opls
+        improper_style  cvff
+        #pair_style      lj/cut/coul/cut ${cutoff}  # for non-period sims
+        pair_style      lj/cut/coul/long   ${cutoff}
+        kspace_style    pppm 0.0001
+       special_bonds lj/coul 0.0 0.0 0.5 
+
+read_data 1M_equil.lmps
+group Hyd molecule > 20
+delete_atoms group Hyd bond yes
+#reset_atom_ids sort yes
+minimize 1.0e-3 1.0e-5 100000 400000   # minimization beforehand is optional
+fix myfxnvt all nvt temp 300.0 300.0 100.0
+thermo        100             # Report status every 100 timesteps.
+thermo_style  custom step temp pe ke etotal epair ebond eangle edihed
+timestep 1.0                  # The timestep might need to be adjusted.
+run 0                    # Simulation duration (in timesteps)i
+write_data noH2_1M_equil.lmps
