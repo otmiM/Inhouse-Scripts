@@ -4,8 +4,7 @@
 ## FIXME: Duplicate entries need to be removed
 ## Convert bond.txt to bond.csv and place it in the same folder as code
 ## Execute code as '$ python getdihedrals.py'
-## Author: Janani Sampath
-##Edited: Mohammed Al Otmi
+## Author: Mohammed Al Otmi and Janani Sampath
 ## Date: 5/25/21
 
 from os import close, closerange
